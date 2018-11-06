@@ -2,6 +2,10 @@
 
 GPLv3 Licensed API for BestMixer in Python3
 
-### Todo
+### Dependencies
 
-* Add .onion/Tor support via SOCKS proxy
+* json
+* requests
+* requests[socks] - For Tor support
+
+### Todo

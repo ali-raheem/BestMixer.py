@@ -7,20 +7,20 @@
 import json
 import requests
 
-#http://bestmixer7o57mba.onion
-#https://bestmixer.io
-
 class BestMixer:
-    def __init__(self, api_key):
+    def __init__(self, api_key, tor = None, tor_port = 9150):
         self.api_key = api_key
-        self.url = 'https://bestmixer.io' + '/api/ext'
+        self.url = 'http://bestmixer7o57mba.onion' if tor else 'https://bestmixer.io'
+        self.url += '/api/ext'
+        #9150 is port for TBB, tor uses 9050
+        self.proxies = {'http': 'socks5://localhost:'+str(tor_port)} if tor else {}
     def request(self, action, data):
         data['api_key'] = self.api_key
         data = json.dumps(data)
         headers = {'Accept': 'application/json',
                    'Content-Type':'application/json'}
-        r = requests.post(self.url + action, data = data, headers = headers)
-        return json.loads(r.text)
+        r = requests.post(self.url + action, data = data, headers = headers, proxies = self.proxies)
+        return r.text
     def getCodeInfo(self, id):
         data = {'bm_code':  id}
         return self.request('/code/info', data)
@@ -37,15 +37,17 @@ class BestMixer:
         return self.request('/order/create', data)
 
 if __name__ == '__main__':
-    bm = BestMixer("replace_with_API_key")
+    bm = BestMixer("replace_with_api_key")
     # Example two address LTC mix with 30/70 split 100mins and 400 min delays, 0.5612% fee
-    print(bm.orderCreate('ltc', 0.5612, [
-        {'address': 'Lxxxxxxxxxxx',
+    print(bm.orderCreate('ltc', 0.5612,
+    [
+        {'address': 'Lxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
          'percent': 30,
-         'delay': 100
+         'delay': 55
         },
-        {'address': 'Lxxxx',
+        {'address': 'Lxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
          'percent': 70,
-         'delay': 400
+         'delay': 120
         }
-    ]))
+    ]
+    ))
