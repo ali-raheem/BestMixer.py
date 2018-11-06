@@ -20,7 +20,7 @@ class BestMixer:
         headers = {'Accept': 'application/json',
                    'Content-Type':'application/json'}
         r = requests.post(self.url + action, data = data, headers = headers, proxies = self.proxies)
-        return r.text
+        return json.loads(r.text)
     def getCodeInfo(self, id):
         data = {'bm_code':  id}
         return self.request('/code/info', data)
