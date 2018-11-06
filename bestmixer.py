@@ -21,6 +21,9 @@ class BestMixer:
                    'Content-Type':'application/json'}
         r = requests.post(self.url + action, data = data, headers = headers, proxies = self.proxies)
         return json.loads(r.text)
+    def getOrderInfo(self, id):
+        data = {'order_id': id}
+        return self.request('/order/info', data)
     def getCodeInfo(self, id):
         data = {'bm_code':  id}
         return self.request('/code/info', data)
