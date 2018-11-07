@@ -70,6 +70,6 @@ if __name__ == '__main__':
     BM = BestMixer('replace_with_API_key')
     # Example two address LTC mix with 30/70 split half hour and 2hr delays, 0.5612% fee
     order = BM.order_create('ltc', 0.5612,
-    [BestMixer.output('LaaYhmDyy49iKxRrEoryWjFfW48W4nJUhK', 30, 30),
-     BestMixer.output('LP2bKDnX67fqozk2LbT7nctF8betfpZgD6', 70, 120)])
+    [BestMixer.output('Lxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 30, 30),
+     BestMixer.output('Lxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 70, 120)])
     print(base64.b64decode(order['data']['letter_of_guarantee']).decode())
